@@ -2,33 +2,22 @@ function sortear() {
     let quantidade = parseInt(document.getElementById('quantidade').value);
     let de = parseInt(document.getElementById('de').value);
     let ate = parseInt(document.getElementById('ate').value);
-    while (quantidade > ate-de) {
-        alert('A quantidade de números sorteador não pode ser maior que o intervalo. Verifique!');
-        return;
-    }
-    let numero = obterNumeroAleatorio(de, ate);
-    let sorteados = [];
+    let listaSorteados = [];
+
     for (let index = 0; index < quantidade; index++) {
-        let numero = obterNumeroAleatorio(de, ate);
-        while (sorteados.includes(numero)) {
-            numero = obterNumeroAleatorio(de, ate);
+        let numeroSorteado = gerarNumeroAleatorio(de, ate);
+
+        while (listaSorteados.includes(numeroSorteado)) {
+            numeroSorteado = gerarNumeroAleatorio(de, ate);
         }
-        sorteados.push(numero);
+        listaSorteados.push(numeroSorteado);
+        console.log(listaSorteados);
     }
-    let resultado = document.getElementById('resultado');
-    resultado.innerHTML = `<label class="texto__paragrafo">Números sorteados:  ${sorteados}</label>`
-    alterarStatusBotao();
-    if (de >= ate) {
-        alert('Por favor, adicione um valor inicial menor que o valor final que você queira sortear!')
-        document.getElementById('de').value = '';
-        document.getElementById('ate').value = '';
-        document.getElementById('resultado').innerHTML = 'Números sorteados:  nenhum até agora';
-        // return; Solução do instrutor, porém mesmo assim sorteia o valor e não apaga os campos escritos.
-    }
+    document.getElementById('resultado').innerHTML = `Numeros sorteados: ${listaSorteados}`
 }
 
-function obterNumeroAleatorio(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+function gerarNumeroAleatorio(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 function alterarStatusBotao() {
@@ -38,7 +27,7 @@ function alterarStatusBotao() {
         botaoReiniciar.classList.add('container__botao');
     } else {
         botaoReiniciar.classList.remove('container__botao');
-        botaoReiniciar.classList.add('container__botao-desabilitado');
+        botaoReiniciar.classList.add('container__botao-desabilitado')
     }
 }
 
